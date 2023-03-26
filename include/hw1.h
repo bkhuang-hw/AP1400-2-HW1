@@ -5,6 +5,8 @@
 using Matrix = std::vector<std::vector<double>>;
 using size_t = unsigned int;
 
+namespace algebra {
+
 Matrix zeros(size_t n, size_t m);
 
 Matrix ones(size_t n, size_t m);
@@ -36,5 +38,6 @@ Matrix ero_multiply(const Matrix& matrix, size_t r, double c);
 Matrix ero_sum(const Matrix& matrix, size_t r1, double c, size_t r2);
 
 Matrix upper_triangular(const Matrix& matrix);
+}  // namespace algebra
 
 #endif  //AP_HW1_H
