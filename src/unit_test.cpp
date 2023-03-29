@@ -5,70 +5,70 @@
 
 /*
 TEST(HW1Test, ZEROS) {
-    Matrix matrix{algebra::zeros(5, 6)};
+  Matrix matrix{algebra::zeros(5, 6)};
 
-    // check the size of the matrix
-    EXPECT_EQ(matrix.size(), 5);
-    EXPECT_EQ(matrix[0].size(), 6);
+  // check the size of the matrix
+  EXPECT_EQ(matrix.size(), 5);
+  EXPECT_EQ(matrix[0].size(), 6);
 
-    // check the value of the elements
-    for (const auto& row : matrix)
-        for (const auto& elem : row)
-            EXPECT_DOUBLE_EQ(elem, 0);
+  // check the value of the elements
+  for (const auto& row : matrix)
+    for (const auto& elem : row)
+      EXPECT_DOUBLE_EQ(elem, 0);
 }
 
 TEST(HW1Test, ONES) {
-    Matrix matrix{algebra::ones(7, 3)};
+  Matrix matrix{algebra::ones(7, 3)};
 
-    // check the size of the matrix
-    EXPECT_EQ(matrix.size(), 7);
-    EXPECT_EQ(matrix[0].size(), 3);
+  // check the size of the matrix
+  EXPECT_EQ(matrix.size(), 7);
+  EXPECT_EQ(matrix[0].size(), 3);
 
-    // check the value of the elements
-    for (const auto& row : matrix)
-        for (const auto& elem : row)
-            EXPECT_DOUBLE_EQ(elem, 1);
+  // check the value of the elements
+  for (const auto& row : matrix)
+    for (const auto& elem : row)
+      EXPECT_DOUBLE_EQ(elem, 1);
 }
 
 TEST(HW1Test, RANDOM1) {
-    using ::testing::AllOf;
-    using ::testing::Ge;
-    using ::testing::Lt;
+  using ::testing::AllOf;
+  using ::testing::Ge;
+  using ::testing::Lt;
 
-    Matrix matrix{algebra::random(4, 4, -5, 7)};
+  Matrix matrix{algebra::random(4, 4, -5, 7)};
 
-    // check the size of the matrix
-    EXPECT_EQ(matrix.size(), 4);
-    EXPECT_EQ(matrix[0].size(), 4);
+  // check the size of the matrix
+  EXPECT_EQ(matrix.size(), 4);
+  EXPECT_EQ(matrix[0].size(), 4);
 
-    // check the value of the elements
-    for (const auto& row : matrix)
-        for (const auto& elem : row)
-            EXPECT_THAT(elem, AllOf(Ge(-5.0), Lt(7)));
+  // check the value of the elements
+  for (const auto& row : matrix)
+    for (const auto& elem : row)
+      EXPECT_THAT(elem, AllOf(Ge(-5.0), Lt(7)));
 
-    // show the matrix to test algebra::show function
-    std::cout << "random matrix [-5, 7)" << std::endl;
-    algebra::show(matrix);
-    std::cout << std::endl;
+  // show the matrix to test algebra::show function
+  std::cout << "random matrix [-5, 7)" << std::endl;
+  algebra::show(matrix);
+  std::cout << std::endl;
 }
 
 TEST(HW1Test, RANDOM2) {
-    // Caution: min cannot be greater than max
-    EXPECT_THROW(algebra::random(3, 4, 4, 2), std::logic_error);
+  // Caution: min cannot be greater than max
+  EXPECT_THROW(algebra::random(3, 4, 4, 2), std::logic_error);
 }
 
 TEST(HW1Test, MULTIPLY1) {
-    Matrix matrix{algebra::random(3, 4, -4, 2)};
-    Matrix mult{algebra::multiply(matrix, 3.5)};
+  Matrix matrix{algebra::random(3, 4, -4, 2)};
+  Matrix mult{algebra::multiply(matrix, 3.5)};
 
-    // check the size of the matrix
-    EXPECT_EQ(mult.size(), 3);
-    EXPECT_EQ(mult[0].size(), 4);
+  // check the size of the matrix
+  EXPECT_EQ(mult.size(), 3);
+  EXPECT_EQ(mult[0].size(), 4);
 
-    // check the value of the elements
-    for (size_t i{}; i < mult.size(); i++)
-        for (size_t j{}; j < mult[i].size(); j++)
-            EXPECT_NEAR(mult[i][j], matrix[i][j]*3.5, 0.03);
+  // check the value of the elements
+  for (size_t i{}; i < mult.size(); i++)
+    for (size_t j{}; j < mult[i].size(); j++)
+      EXPECT_NEAR(mult[i][j], matrix[i][j] * 3.5, 0.03);
 }
 
 TEST(HW1Test, MULTIPLY2) {

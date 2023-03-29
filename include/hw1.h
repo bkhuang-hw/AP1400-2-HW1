@@ -1,17 +1,25 @@
 #ifndef AP_HW1_H
 #define AP_HW1_H
+#include <exception>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <random>
+#include <sstream>
+#include <string>
 #include <vector>
 
 using Matrix = std::vector<std::vector<double>>;
-using size_t = unsigned int;
+using size_t = std::size_t;
 
 namespace algebra {
-
 Matrix zeros(size_t n, size_t m);
 
 Matrix ones(size_t n, size_t m);
 
 Matrix random(size_t n, size_t m, double min, double max);
+
+std::pair<size_t, size_t> get_shape(const Matrix& matrix);
 
 void show(const Matrix& matrix);
 
