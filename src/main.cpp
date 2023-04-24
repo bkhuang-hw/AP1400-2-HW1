@@ -6,7 +6,7 @@
 #include "hw1.h"
 
 int main(int argc, char** argv) {
-  if (true) {
+  if (false) {
     // make false to run unit-tests
     // debug section
   } else {

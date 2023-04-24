@@ -6,6 +6,7 @@
 #include <iostream>
 #include <random>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
