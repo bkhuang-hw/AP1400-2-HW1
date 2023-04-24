@@ -69,8 +69,8 @@ void show(const Matrix& matrix) {
     return;
   }
 
-  const int precision = 4;
-  const int width = 9;
+  const int precision = 3;
+  const int width = 8;
   std::cout << std::setprecision(precision) << std::fixed;
 
   std::cout << "Matrix(";
@@ -90,6 +90,96 @@ void show(const Matrix& matrix) {
   std::cout << ")" << std::endl;
 
   std::cout << std::resetiosflags(std::ios_base::fmtflags());
+}
+
+Matrix multiply(const Matrix& matrix, double c) {
+  Matrix new_mat(matrix);
+
+  for (auto& row : new_mat) {
+    for (auto& elem : row) {
+      elem *= c;
+    }
+  }
+
+  return new_mat;
+}
+
+Matrix multiply(const Matrix& matrix1, const Matrix& matrix2) {
+  size_t m1, n1, m2, n2;
+  try {
+    auto shape = get_shape(matrix1);
+    m1 = shape.first, n1 = shape.second;
+  } catch (const std::exception& ex) {
+    std::cerr << "Matrix1 Error: " << ex.what() << std::endl;
+    return {};
+  }
+  try {
+    auto shape = get_shape(matrix2);
+    m2 = shape.first, n2 = shape.second;
+  } catch (const std::exception& ex) {
+    std::cerr << "Matrix2 Error: " << ex.what() << std::endl;
+    return {};
+  }
+
+  if (n1 != m2) {
+    throw std::invalid_argument(
+        "Matrix 1 column number must be equal to Matrix2 row number!");
+  }
+
+  Matrix new_mat(m1, std::vector<double>(n2, 0.));
+  for (int i = 0; i < m1; i++) {
+    for (int j = 0; j < n2; j++) {
+      for (int k = 0; k < n1; k++) {
+        new_mat[i][j] += (matrix1[i][k] * matrix2[k][j]);
+      }
+    }
+  }
+
+  return new_mat;
+}
+
+Matrix sum(const Matrix& matrix, double c) {
+  Matrix new_mat(matrix);
+
+  for (auto& row : new_mat) {
+    for (auto& elem : row) {
+      elem += c;
+    }
+  }
+
+  return new_mat;
+}
+
+Matrix sum(const Matrix& matrix1, const Matrix& matrix2) {
+  size_t m1, n1, m2, n2;
+  try {
+    auto shape = get_shape(matrix1);
+    m1 = shape.first, n1 = shape.second;
+  } catch (const std::exception& ex) {
+    std::cerr << "Matrix1 Error: " << ex.what() << std::endl;
+    return {};
+  }
+  try {
+    auto shape = get_shape(matrix2);
+    m2 = shape.first, n2 = shape.second;
+  } catch (const std::exception& ex) {
+    std::cerr << "Matrix2 Error: " << ex.what() << std::endl;
+    return {};
+  }
+
+  if (m1 != m2 || n1 != n2) {
+    throw std::invalid_argument(
+        "Matrix 1 must have the same shape with Matrix2!");
+  }
+
+  Matrix new_mat(matrix1);
+  for (int i = 0; i < m1; i++) {
+    for (int j = 0; j < n1; j++) {
+      new_mat[i][j] += matrix2[i][j];
+    }
+  }
+
+  return new_mat;
 }
 
 }  // namespace algebra
