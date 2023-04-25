@@ -209,12 +209,7 @@ double determinant(const Matrix& matrix) {
   double ret = 0;
   for (int i = 0; i < n; i++) {
     Matrix _minor = minor(matrix, i, 0);
-    double alge_remain = matrix[i][0] * determinant(_minor);
-    if (i % 2 == 0) {
-      ret += alge_remain;
-    } else {
-      ret -= alge_remain;
-    }
+    ret += (i % 2 == 0 ? 1.0 : -1.0) * matrix[i][0] * determinant(_minor);
   }
 
   return ret;
@@ -225,12 +220,12 @@ Matrix inverse(const Matrix& matrix) {
   size_t n = shape.first, m = shape.second;
 
   if (n != m) {
-    throw std::logic_error("non-square matrixs have no inverse!");
+    throw std::logic_error("Non-square matrixs have no inverse!");
   }
 
   double det = determinant(matrix);
   if (is_zero(det)) {
-    throw std::logic_error("singular matrices have no inverse!");
+    throw std::logic_error("Singular matrices have no inverse!");
   }
 
   Matrix new_mat = zeros(n, m);
@@ -246,14 +241,12 @@ Matrix inverse(const Matrix& matrix) {
 
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
-      new_mat[i][j] = determinant(minor(matrix, i, j));
-      if ((i + j) % 2 == 1) {
-        new_mat[i][j] *= -1;
-      }
+      double minor_det = determinant(minor(matrix, i, j));
+      new_mat[j][i] = ((i + j) % 2 == 0 ? 1.0 : -1.0) / det * minor_det;
     }
   }
 
-  return transpose(multiply(new_mat, 1.0 / det));
+  return new_mat;
 }
 
 Matrix concatenate(const Matrix& matrix1, const Matrix& matrix2, int axis = 0) {
@@ -307,10 +300,7 @@ Matrix ero_swap(const Matrix& matrix, size_t r1, size_t r2) {
   }
 
   Matrix new_mat(matrix);
-  for (int i = 0; i < m; i++) {
-    new_mat[r1][i] = matrix[r2][i];
-    new_mat[r2][i] = matrix[r1][i];
-  }
+  std::swap(new_mat[r1], new_mat[r2]);
 
   return new_mat;
 }
