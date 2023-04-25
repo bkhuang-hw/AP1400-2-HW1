@@ -14,6 +14,8 @@ using Matrix = std::vector<std::vector<double>>;
 using size_t = std::size_t;
 
 namespace algebra {
+bool is_zero(double x);
+
 Matrix zeros(size_t n, size_t m);
 
 Matrix ones(size_t n, size_t m);

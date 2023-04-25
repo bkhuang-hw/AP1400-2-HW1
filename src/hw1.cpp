@@ -1,6 +1,9 @@
 #include "hw1.h"
 
 namespace algebra {
+bool is_zero(double x) {
+  return abs(x) < 1e-3;
+}
 
 std::pair<size_t, size_t> get_shape(const Matrix& matrix) {
   size_t n = matrix.size();
@@ -226,7 +229,7 @@ Matrix inverse(const Matrix& matrix) {
   }
 
   double det = determinant(matrix);
-  if (abs(det) < 1e-3) {
+  if (is_zero(det)) {
     throw std::logic_error("singular matrices have no inverse!");
   }
 
@@ -361,9 +364,9 @@ Matrix upper_triangular(const Matrix& matrix) {
 
   for (int j = 0; j < m - 1; j++) {
     double divisor = new_mat[j][j];
-    if (abs(divisor) < 1e-3) {
+    if (is_zero(divisor)) {
       for (int i = j + 1; i < n; i++) {
-        if (abs(new_mat[i][j]) >= 1e-3) {
+        if (!is_zero(new_mat[i][j])) {
           new_mat = ero_swap(new_mat, j, i);
           break;
         }
@@ -372,7 +375,7 @@ Matrix upper_triangular(const Matrix& matrix) {
     }
     for (int i = j + 1; i < n; i++) {
       double head_val = new_mat[i][j];
-      if (abs(head_val) < 1e-3) {
+      if (is_zero(head_val)) {
         continue;
       }
       new_mat = ero_sum(new_mat, j, -1.0 * head_val / divisor, i);
