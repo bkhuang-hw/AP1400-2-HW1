@@ -208,8 +208,8 @@ double determinant(const Matrix& matrix) {
 
   double ret = 0;
   for (int i = 0; i < n; i++) {
-    Matrix _minor = minor(matrix, i, 0);
-    ret += (i % 2 == 0 ? 1.0 : -1.0) * matrix[i][0] * determinant(_minor);
+    double minor_det = determinant(minor(matrix, i, 0));
+    ret += (i % 2 == 0 ? 1.0 : -1.0) * matrix[i][0] * minor_det;
   }
 
   return ret;
